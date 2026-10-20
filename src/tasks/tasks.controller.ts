@@ -11,9 +11,12 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @ApiOperation({ summary: 'Obtener todas las tareas' })
+  @ApiResponse({ status: 200, description: 'Lista de tareas.', type: [Task] })
   @Get()
-  findAll() { return this.tasksService.findAll(); }
-
+  findAll() {
+    console.log('--- Alguien está consultando todas las tareas ---');
+    return this.tasksService.findAll();
+  }
   @ApiOperation({ summary: 'Obtener tarea por ID' })
   @ApiResponse({ status: 200, description: 'Tarea encontrada.', type: Task })
   @ApiNotFoundResponse({ description: 'Tarea no encontrada.' })
@@ -35,9 +38,5 @@ export class TasksController {
   @ApiOperation({ summary: 'Eliminar tarea por ID' })
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) { return this.tasksService.remove(id); }
-  @Get()
-findAll() {
-  console.log('--- Alguien está consultando todas las tareas ---');
-  return this.tasksService.findAll();
-}
+
 }
